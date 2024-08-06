@@ -14,7 +14,7 @@ export class QuizzesService {
 
   async findAll() {
     try {
-      const allQuiz = await this.prisma.quiz.findMany();
+      const allQuiz = await this.prisma.quiz.findMany({});
       return allQuiz;
     } catch (error) {
       console.error('Error in findAll:', error);
