@@ -1,4 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
-export class PrismaService {}
+export class PrismaService extends PrismaClient implements OnModuleInit {
+    private logger = new Logger(PrismaService.name)
+    
+    async onModuleInit() {
+        try {
+            this.$connect()
+            this.logger.log("Success")
+        } catch (error) {
+            this.logger.error("Error")
+        }
+    }
+}
