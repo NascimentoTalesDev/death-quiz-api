@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Quiz } from '@prisma/client';
+import { Prisma, Quiz } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -46,6 +46,106 @@ export class QuizzesRepository {
     return allQuiz;
   }
 
+  async favorite(quizId: number, userId: number) {
+    const isFavorite = await this.prismaService.favorite.findFirst({
+      where: {
+        userId,
+        quizId,
+      },
+    });
+    if (isFavorite) {
+      await this.prismaService.favorite.deleteMany({
+        where: {
+          userId,
+          quizId,
+        },
+      });
+      return false;
+    } else {
+      await this.prismaService.favorite.create({
+        data: {
+          userId,
+          quizId,
+        },
+      });
+      return true;
+    }
+  }
+
+  async like(quizId: number, userId: number) {
+    const isLiked = await this.prismaService.likedQuizzes.findFirst({
+      where: {
+        userId,
+        quizId,
+      },
+    });
+    if (isLiked) {
+      await this.prismaService.likedQuizzes.deleteMany({
+        where: {
+          userId,
+          quizId,
+        },
+      });
+      return false;
+    } else {
+      await this.prismaService.$transaction(
+        async (prisma) => {
+          await prisma.unLikedQuizzes.deleteMany({
+            where: {
+              userId,
+              quizId,
+            },
+          });
+          await prisma.likedQuizzes.create({
+            data: {
+              userId,
+              quizId,
+            },
+          });
+        },
+        { isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted }
+      );  
+      return true;
+    }
+  }
+
+  async unLike(quizId: number, userId: number) {
+    const isUnLiked = await this.prismaService.unLikedQuizzes.findFirst({
+      where: {
+        userId,
+        quizId,
+      },
+    });
+    if (isUnLiked) {
+      await this.prismaService.unLikedQuizzes.deleteMany({
+        where: {
+          userId,
+          quizId,
+        },
+      });
+      return false;
+    } else {
+      await this.prismaService.$transaction(
+        async (prisma) => {
+          await prisma.likedQuizzes.deleteMany({
+            where: {
+              userId,
+              quizId,
+            },
+          });
+          await prisma.unLikedQuizzes.create({
+            data: {
+              userId,
+              quizId,
+            },
+          });
+        },
+        { isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted }
+      );
+      return true;
+    }
+  }
+
   async findAll(): Promise<Quiz[]> {
     try {
       const allQuizzes = await this.prismaService.quiz.findMany({});
@@ -79,6 +179,5 @@ export class QuizzesRepository {
       return null;
     }
   }
-
 
 }

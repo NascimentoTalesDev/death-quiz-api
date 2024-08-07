@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { QuizzesService } from './quizzes.service';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
@@ -12,9 +12,27 @@ export class QuizzesController {
     return await this.quizzesService.findLatestQuizzesAdded();
   }
 
-  @Post('favorites')
-  async findAllFavorites(@Param('userId') userId: number) {    
-    return await this.quizzesService.findAllFavorites(userId);
+  @Get('favorites')
+  async findAllFavorites(@Query('userId') userId: string) {        
+    return await this.quizzesService.findAllFavorites(+userId);
+  }
+
+  @Post("favorite")
+  async favorite (@Query() quizId: string, userId: string ){    
+    const favoriteUpdated = await this.quizzesService.favorite(+quizId, +userId)
+    return favoriteUpdated
+  }
+  
+  @Post("like")
+  async like (@Query() quizId: string, userId: string ){
+    const likeUpdated = await this.quizzesService.like(+quizId, +userId)
+    return likeUpdated
+  }
+
+  @Post("unlike")
+  async unLike (@Query() quizId: string, userId: string ){
+    const unLikeUpdated = await this.quizzesService.unLike(+quizId, +userId)
+    return unLikeUpdated
   }
 
   @Post()
