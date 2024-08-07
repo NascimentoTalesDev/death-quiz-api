@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class QuizzesService {
+
+  constructor(private prismaService: PrismaService){}
 
   create(createQuizDto: CreateQuizDto) {
     return 'This action adds a new quiz';
@@ -11,8 +14,9 @@ export class QuizzesService {
 
   async findAll() {
     try {
-
-      return "allQuizzes"; 
+      const allQuizzes = await this.prismaService.quiz.findMany({})
+      console.log(allQuizzes);
+      return allQuizzes; 
     } catch (error) {
       console.log(error);
     }
