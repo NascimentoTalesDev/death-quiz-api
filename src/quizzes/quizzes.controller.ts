@@ -18,19 +18,20 @@ export class QuizzesController {
   }
 
   @Post("favorite")
-  async favorite (@Query() quizId: string, userId: string ){    
+  async favorite (@Query('quizId') quizId: string, @Query('userId') userId: string ){
+    console.log(quizId, userId);    
     const favoriteUpdated = await this.quizzesService.favorite(+quizId, +userId)
     return favoriteUpdated
   }
   
   @Post("like")
-  async like (@Query() quizId: string, userId: string ){
+  async like (@Query('quizId') quizId: string, @Query('userId') userId: string ){
     const likeUpdated = await this.quizzesService.like(+quizId, +userId)
     return likeUpdated
   }
 
   @Post("unlike")
-  async unLike (@Query() quizId: string, userId: string ){
+  async unLike (@Query('quizId') quizId: string, @Query('userId') userId: string ){
     const unLikeUpdated = await this.quizzesService.unLike(+quizId, +userId)
     return unLikeUpdated
   }

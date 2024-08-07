@@ -47,6 +47,8 @@ export class QuizzesRepository {
   }
 
   async favorite(quizId: number, userId: number) {
+    console.log("FAVORITE", quizId, userId);
+    
     const isFavorite = await this.prismaService.favorite.findFirst({
       where: {
         userId,
@@ -148,8 +150,16 @@ export class QuizzesRepository {
 
   async findAll(): Promise<Quiz[]> {
     try {
-      const allQuizzes = await this.prismaService.quiz.findMany({});
-      console.log(allQuizzes);
+      const allQuizzes = await this.prismaService.quiz.findMany({
+        include: {
+          questions: {
+            include: {
+              answers: true,
+            },
+          },
+          favorites: true,
+        },
+      });
       return allQuizzes;
     } catch (error) {
       console.log(error);
