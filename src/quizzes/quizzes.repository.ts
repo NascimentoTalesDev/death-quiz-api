@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, Quiz } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../domain/services/prisma/prisma.service';
 
 @Injectable()
 export class QuizzesRepository {
@@ -9,7 +9,7 @@ export class QuizzesRepository {
   async findLatestQuizzesAdded(): Promise<Quiz[]> {
     const allQuiz = await this.prismaService.quiz.findMany({
       orderBy: {
-        createdAt: "desc",
+        createdAt: 'desc',
       },
       take: 4,
       include: {
@@ -47,8 +47,6 @@ export class QuizzesRepository {
   }
 
   async favorite(quizId: number, userId: number) {
-    console.log("FAVORITE", quizId, userId);
-    
     const isFavorite = await this.prismaService.favorite.findFirst({
       where: {
         userId,
@@ -105,8 +103,8 @@ export class QuizzesRepository {
             },
           });
         },
-        { isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted }
-      );  
+        { isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted },
+      );
       return true;
     }
   }
@@ -142,7 +140,7 @@ export class QuizzesRepository {
             },
           });
         },
-        { isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted }
+        { isolationLevel: Prisma.TransactionIsolationLevel.ReadCommitted },
       );
       return true;
     }
@@ -165,7 +163,7 @@ export class QuizzesRepository {
       console.log(error);
     }
   }
-
+ 
   async findOne(id: number): Promise<Quiz> {
     try {
       const quiz = await this.prismaService.quiz.findUnique({
@@ -189,5 +187,4 @@ export class QuizzesRepository {
       return null;
     }
   }
-
 }

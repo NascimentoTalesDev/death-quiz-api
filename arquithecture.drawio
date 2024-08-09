@@ -1,0 +1,60 @@
+src/
+├── app/                         # Módulos principais da aplicação
+│   ├── auth/                    # Módulo de autenticação
+│   ├── users/                   # Módulo de usuários
+│   ├── orders/                  # Módulo de pedidos
+│   └── products/                # Módulo de produtos
+│
+├── common/                      # Código compartilhado entre os módulos
+│   ├── decorators/              # Decorators customizados
+│   ├── exceptions/              # Exceções customizadas
+│   ├── guards/                  # Guardas de rota
+│   ├── interceptors/            # Interceptadores HTTP
+│   ├── interfaces/              # Interfaces e tipos globais
+│   ├── pipes/                   # Pipes de transformação e validação
+│   ├── filters/                 # Filtros de exceção globais
+│   └── utils/                   # Funções utilitárias e helpers
+│
+├── config/                      # Configurações da aplicação
+│   ├── database.config.ts       # Configuração de banco de dados
+│   ├── app.config.ts            # Configuração da aplicação
+│   └── env/                     # Variáveis de ambiente para diferentes ambientes
+│       ├── development.env
+│       ├── production.env
+│       └── test.env
+│
+├── domain/                      # Camada de domínio (DDD)
+│   ├── entities/                # Entidades do domínio
+│   ├── value-objects/           # Objetos de valor
+│   ├── repositories/            # Interfaces de repositórios
+│   └── services/                # Serviços de domínio
+│
+├── infrastructure/              # Camada de infraestrutura
+│   ├── database/                # Configurações e migrações do banco de dados
+│   ├── orm/                     # Configuração de ORM (e.g., TypeORM, Sequelize)
+│   ├── repositories/            # Implementações dos repositórios
+│   ├── mail/                    # Serviço de envio de e-mails
+│   ├── messaging/               # Integração com filas de mensagens (e.g., RabbitMQ)
+│   ├── external-apis/           # Integração com APIs externas
+│   └── logging/                 # Configuração de logging e monitoramento
+│
+├── interfaces/                  # Camada de interface (Application Layer)
+│   ├── controllers/             # Controladores REST/GraphQL
+│   ├── resolvers/               # Resolvers GraphQL (se aplicável)
+│   ├── dtos/                    # Data Transfer Objects (DTOs)
+│   ├── mappers/                 # Mapeadores entre DTOs e Entidades
+│   └── serializers/             # Serializadores para saída de dados
+│
+├── security/                    # Camada de segurança
+│   ├── authentication/          # Estratégias e middleware de autenticação
+│   ├── authorization/           # Controle de acesso e políticas de autorização
+│   └── encryption/              # Funções de criptografia e hashing
+│
+├── tests/                       # Testes automatizados
+│   ├── unit/                    # Testes unitários
+│   ├── integration/             # Testes de integração
+│   └── e2e/                     # Testes de ponta a ponta
+│
+├── main.ts                      # Arquivo principal de inicialização do NestJS
+├── app.module.ts                # Módulo principal da aplicação
+└── ...                          # Outros arquivos de configuração e inicialização
