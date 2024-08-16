@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { UsersService } from '../../../domain/services/users/users.service';
 import { CreateUserDto } from '../../dtos/users/create-user.dto';
 import { UpdateUserDto } from '../../dtos/users/update-user.dto';
@@ -7,8 +7,10 @@ import { SignInUserDto } from '../../dtos/users/sign-in-user.dto';
 import { CreateSwagger } from '../../../docs/swagger/users/create.swagger';
 import { BadRequestSwagger } from 'src/docs/swagger/errors/bad-request.swagger';
 import { NotFoundSwagger } from 'src/docs/swagger/errors/not-found.swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
+@UseGuards(AuthGuard('jwt'))
 @ApiTags("Users")
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
