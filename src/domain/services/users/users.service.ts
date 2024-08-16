@@ -7,9 +7,7 @@ import { SignInUserDto } from '../../../interfaces/dtos/users/sign-in-user.dto';
 @Injectable()
 export class UsersService {
   
-  constructor(
-    private userRepository: UsersRepository,
-  ){}
+  constructor(private userRepository: UsersRepository){}
 
   async create(user: CreateUserDto){    
     return await this.userRepository.create(user);
