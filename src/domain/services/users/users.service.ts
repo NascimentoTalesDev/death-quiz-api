@@ -3,15 +3,12 @@ import { UsersRepository } from '../../repositories/users/users.repository';
 import { CreateUserDto } from '../../../interfaces/dtos/users/create-user.dto';
 import { UpdateUserDto } from '../../../interfaces/dtos/users/update-user.dto';
 import { SignInUserDto } from '../../../interfaces/dtos/users/sign-in-user.dto';
-import { AuthService } from '../auth/auth.service';
-
 
 @Injectable()
 export class UsersService {
   
   constructor(
     private userRepository: UsersRepository,
-    private readonly authService: AuthService
   ){}
 
   async create(user: CreateUserDto){    
@@ -47,6 +44,10 @@ export class UsersService {
 
   async signIn(signInUserDto: SignInUserDto) {    
     const user = await this.findByEmail(signInUserDto.email)
+    // const token = await this.authService.token(user)
+    console.log("USER", user);
+    // console.log("TOKEN", token);
+    
     return user  
   }
 }

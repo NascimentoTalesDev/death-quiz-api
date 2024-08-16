@@ -5,15 +5,28 @@ import { AuthService } from 'src/domain/services/auth/auth.service';
 import { PrismaService } from 'src/domain/services/prisma/prisma.service';
 import { UsersService } from 'src/domain/services/users/users.service';
 import { AuthController } from 'src/interfaces/controllers/auth/auth.controller';
+import { UsersModule } from '../users/users.module';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { LocalStrategy } from 'src/security/authentication/Jwt/strategies/local.strategy';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true })],
+  imports: [
+    ConfigModule.forRoot(),
+    UsersModule,
+    PassportModule,
+    JwtModule.register({
+      privateKey: process.env.JWT_SECRET_KEY,
+      signOptions: { expiresIn: '60s' },
+    }),
+  ],
   controllers: [AuthController],
   providers: [
+    AuthService,
     PrismaService,
     UsersRepository,
-    AuthService,
     UsersService,
+    LocalStrategy,
   ],
   exports: [AuthService],
 })

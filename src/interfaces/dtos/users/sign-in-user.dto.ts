@@ -8,5 +8,5 @@ export class SignInUserDto {
 
     @ApiProperty()
     @IsNotEmpty({ message: "Por favor, insira o sua senha!" })
-    password: string;
+    password: number;
 }

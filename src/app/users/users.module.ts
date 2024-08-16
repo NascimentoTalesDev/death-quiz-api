@@ -4,9 +4,12 @@ import { UsersController } from '../../interfaces/controllers/users/users.contro
 import { UsersRepository } from '../../domain/repositories/users/users.repository';
 import { PrismaService } from 'src/domain/services/prisma/prisma.service';
 import { AuthService } from 'src/domain/services/auth/auth.service';
+import { JwtService } from '@nestjs/jwt';
+import { LocalStrategy } from 'src/security/authentication/Jwt/strategies/local.strategy';
 
 @Module({
   controllers: [UsersController],
-  providers: [AuthService, UsersService, UsersRepository, PrismaService],
+  providers: [AuthService, UsersService, UsersRepository, PrismaService, LocalStrategy, JwtService],
+  exports:[UsersService]
 })
 export class UsersModule {}

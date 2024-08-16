@@ -2,8 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestj
 import { QuizzesService } from './quizzes.service';
 import { CreateQuizDto } from './dto/create-quiz.dto';
 import { UpdateQuizDto } from './dto/update-quiz.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('quizzes')
+@ApiTags("Quizzes")
 export class QuizzesController {
   constructor(private readonly quizzesService: QuizzesService) {}
 
@@ -19,7 +21,6 @@ export class QuizzesController {
 
   @Post("favorite")
   async favorite (@Query('quizId') quizId: string, @Query('userId') userId: string ){
-    console.log(quizId, userId);    
     const favoriteUpdated = await this.quizzesService.favorite(+quizId, +userId)
     return favoriteUpdated
   }
