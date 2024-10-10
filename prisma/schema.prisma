@@ -48,8 +48,8 @@ model User {
   instagram     String?
   hash          String?
   password      String?
-  passwordConfirmation      String?
   token         String?
+  role          Role      @default(USER)
 
   accounts Account[]
   sessions Session[]
@@ -63,6 +63,11 @@ model User {
   updatedAt DateTime @updatedAt
 
   @@map("users")
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model VerificationToken {
@@ -81,6 +86,8 @@ model Quiz {
   title     String
   questions Question[]
 
+  isPublished Boolean            @default(false)
+  
   favorites Favorite[]
   Completed CompletedQuizzes[]
   liked     LikedQuizzes[]

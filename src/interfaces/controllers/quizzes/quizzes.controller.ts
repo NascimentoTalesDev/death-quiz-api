@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
-import { QuizzesService } from './quizzes.service';
-import { CreateQuizDto } from './dto/create-quiz.dto';
-import { UpdateQuizDto } from './dto/update-quiz.dto';
+import { QuizzesService } from '../../../domain/services/quizzes/quizzes.service';
 import { ApiTags } from '@nestjs/swagger';
+import { CreateQuizDto } from 'src/interfaces/dtos/quizzes/create-quiz.dto';
+import { UpdateQuizDto } from 'src/interfaces/dtos/quizzes/update-quiz.dto';
 
 @Controller('quizzes')
 @ApiTags("Quizzes")
@@ -38,7 +38,7 @@ export class QuizzesController {
   }
 
   @Post()
-  create(@Body() createQuizDto: CreateQuizDto) {
+  create(@Body() createQuizDto: CreateQuizDto) {    
     return this.quizzesService.create(createQuizDto);
   }
 
@@ -53,12 +53,12 @@ export class QuizzesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateQuizDto: UpdateQuizDto) {
-    return this.quizzesService.update(id, updateQuizDto);
+  update(@Param('id') id: string, @Body() updateQuizDto: UpdateQuizDto) {    
+    return this.quizzesService.update(+id, updateQuizDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.quizzesService.remove(id);
+  remove(@Param('id') id: string) {
+    return this.quizzesService.remove(+id);
   }
 }

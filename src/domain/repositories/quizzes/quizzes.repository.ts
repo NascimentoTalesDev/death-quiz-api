@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, Quiz } from '@prisma/client';
-import { PrismaService } from '../domain/services/prisma/prisma.service';
+import { PrismaService } from '../../services/prisma/prisma.service';
+import { CreateQuizDto } from 'src/interfaces/dtos/quizzes/create-quiz.dto';
+import { UpdateQuizDto } from 'src/interfaces/dtos/quizzes/update-quiz.dto';
 
 @Injectable()
 export class QuizzesRepository {
@@ -158,6 +160,8 @@ export class QuizzesRepository {
           favorites: true,
         },
       });
+      console.log(allQuizzes);
+      
       return allQuizzes;
     } catch (error) {
       console.log(error);
@@ -186,5 +190,17 @@ export class QuizzesRepository {
     } catch (error) {
       return null;
     }
+  }
+
+  async create (createQuizDto: CreateQuizDto) : Promise<Quiz>{
+    const { image, title  } =  createQuizDto;
+    const quiz = await this.prismaService.quiz.create({
+      data: {
+        image,
+        title 
+      }
+    })
+
+    return quiz
   }
 }

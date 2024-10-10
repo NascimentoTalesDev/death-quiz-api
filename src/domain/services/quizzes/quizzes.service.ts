@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateQuizDto } from './dto/create-quiz.dto';
-import { UpdateQuizDto } from './dto/update-quiz.dto';
-import { QuizzesRepository } from './quizzes.repository';
+import { QuizzesRepository } from '../../repositories/quizzes/quizzes.repository';
+import { CreateQuizDto } from 'src/interfaces/dtos/quizzes/create-quiz.dto';
+import { UpdateQuizDto } from 'src/interfaces/dtos/quizzes/update-quiz.dto';
 
 @Injectable()
 export class QuizzesService {
@@ -32,8 +32,8 @@ export class QuizzesService {
     const unLikeUpdated = await this.quizzesRepository.unLike(quizId, userId);
     return unLikeUpdated;
   }
-  create(createQuizDto: CreateQuizDto) {
-    return 'This action adds a new quiz';
+  async create(createQuizDto: CreateQuizDto) {    
+    return await this.quizzesRepository.create(createQuizDto);
   }
 
   async findAll() {
@@ -44,8 +44,9 @@ export class QuizzesService {
     return await this.quizzesRepository.findOne(id);
   }
 
-  update(id: number, updateQuizDto: UpdateQuizDto) {
-    return `This action updates a #${id} quiz`;
+  async update(id: number, updateQuizDto: UpdateQuizDto) { 
+
+    return `This action update a #${id} quiz`;
   }
 
   remove(id: number) {
