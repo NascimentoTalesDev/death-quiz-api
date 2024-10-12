@@ -42,6 +42,11 @@ export class QuizzesController {
     return this.quizzesService.create(createQuizDto);
   }
 
+  @Get("admin")
+  async findAllAdmin() {
+    return await this.quizzesService.findAllAdmin();
+  }
+
   @Get()
   async findAll() {
     return await this.quizzesService.findAll();

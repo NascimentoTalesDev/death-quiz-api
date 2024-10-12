@@ -16,26 +16,23 @@ export class QuizzesService {
   }
 
   async favorite(quizId: number, userId: number) {
-    const favoriteUpdated = await this.quizzesRepository.favorite(
-      quizId,
-      userId,
-    );
-    return favoriteUpdated;
+    return  await this.quizzesRepository.favorite(quizId, userId);
   }
 
   async like(quizId: number, userId: number) {
-    const likeUpdated = await this.quizzesRepository.like(quizId, userId);
-    return likeUpdated;
+    return await this.quizzesRepository.like(quizId, userId);
   }
 
   async unLike(quizId: number, userId: number) {
-    const unLikeUpdated = await this.quizzesRepository.unLike(quizId, userId);
-    return unLikeUpdated;
+    return await this.quizzesRepository.unLike(quizId, userId);
   }
   async create(createQuizDto: CreateQuizDto) {    
     return await this.quizzesRepository.create(createQuizDto);
   }
 
+  async findAllAdmin() {
+    return await this.quizzesRepository.findAllAdmin();
+  }
   async findAll() {
     return await this.quizzesRepository.findAll();
   }

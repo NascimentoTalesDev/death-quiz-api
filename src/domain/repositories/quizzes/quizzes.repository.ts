@@ -148,6 +148,26 @@ export class QuizzesRepository {
     }
   }
 
+  async findAllAdmin(): Promise<Quiz[]> {
+    try {
+      const allQuizzes = await this.prismaService.quiz.findMany({
+        include: {
+          questions: {
+            include: {
+              answers: true,
+            },
+          },
+          favorites: true,
+        },
+      });
+      console.log(allQuizzes);
+      
+      return allQuizzes;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   async findAll(): Promise<Quiz[]> {
     try {
       const allQuizzes = await this.prismaService.quiz.findMany({
