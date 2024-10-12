@@ -26,7 +26,9 @@ export class QuizzesService {
   async unLike(quizId: number, userId: number) {
     return await this.quizzesRepository.unLike(quizId, userId);
   }
-  async create(createQuizDto: CreateQuizDto) {    
+  async create(createQuizDto: CreateQuizDto) { 
+    console.log(createQuizDto);
+       
     return await this.quizzesRepository.create(createQuizDto);
   }
 
