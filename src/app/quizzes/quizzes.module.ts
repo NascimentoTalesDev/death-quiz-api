@@ -6,6 +6,6 @@ import { QuizzesRepository } from '../../domain/repositories/quizzes/quizzes.rep
 
 @Module({
   controllers: [QuizzesController],
-  providers: [QuizzesService, QuizzesRepository, PrismaService],
+  providers: [QuizzesService, QuizzesRepository],
 })
 export class QuizzesModule {}
