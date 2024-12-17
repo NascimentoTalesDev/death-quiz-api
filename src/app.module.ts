@@ -16,7 +16,7 @@ import { QuestionsModule } from './app/questions/questions.module';
 import { UploadsModule } from './app/uploads/uploads.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, QuizzesModule, AuthModule, UsersModule, QuestionsModule, UploadsModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, QuizzesModule],
   // imports: [ConfigModule.forRoot({ isGlobal: true }) , PrismaModule, QuizzesModule, AuthModule, UsersModule, QuestionsModule, UploadsModule],
   controllers: [AppController],
   providers: [AppService, ],
