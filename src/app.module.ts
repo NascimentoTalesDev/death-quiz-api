@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppService } from './app.service';
 import { PrismaModule } from './app/prisma/prisma.module';
 import { QuizzesModule } from './app/quizzes/quizzes.module';
@@ -12,14 +13,13 @@ import { AppController } from './security/app.controller';
 import { LocalStrategy } from './security/authentication/Jwt/strategies/local.strategy';
 import { JwtService } from '@nestjs/jwt';
 import { QuestionsModule } from './app/questions/questions.module';
-import { ConfigModule } from '@nestjs/config';
 import { UploadsModule } from './app/uploads/uploads.module';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule],
   // imports: [ConfigModule.forRoot({ isGlobal: true }) , PrismaModule, QuizzesModule, AuthModule, UsersModule, QuestionsModule, UploadsModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, PrismaService],
   // providers: [AppService, AuthService, UsersService, UsersRepository, PrismaService, LocalStrategy, JwtService],
 })
 export class AppModule {}
